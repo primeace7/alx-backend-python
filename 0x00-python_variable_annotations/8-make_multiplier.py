@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 '''
 Implement an annotated multiplier function that takes a
 function as an arg

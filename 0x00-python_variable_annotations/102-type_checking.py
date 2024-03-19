@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 '''Fixing custom function's annotation '''
 
 
@@ -6,6 +6,7 @@ from typing import List
 
 
 def zoom_array(lst: List, factor: int = 2) -> List:
+    '''return an input list duplicated by a factor'''
     zoomed_in: List = [
         item for item in lst
         for i in range(factor)

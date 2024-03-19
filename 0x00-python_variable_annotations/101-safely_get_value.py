@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 '''Duck typing a custom function with unknown types and return values'''
 
 
@@ -9,6 +9,7 @@ T = TypeVar('T')
 def safely_get_value(
         dct: Mapping, key: Any, default: Union[T, None] = None)\
         -> Union[T, Any]:
+    '''return a dictinary entry or a default value'''
     if key in dct:
         return dct[key]
     else:

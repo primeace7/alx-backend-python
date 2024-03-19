@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 '''Define and implement a type-annotated string concat function
 '''
 
