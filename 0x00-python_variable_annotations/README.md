@@ -1,0 +1,1 @@
+This directory contains code files for the **Python - Variable Annotations** project.
