@@ -2,13 +2,13 @@
 
 import asyncio
 
+async_generator = __import__('0-async_generator').async_generator
+print(async_generator.__annotations__)
 
-measure_runtime = __import__('2-measure_runtime').measure_runtime
+async def print_yielded_values():
+    result = []
+    async for i in async_generator():
+        result.append(i)
+    print(result)
 
-
-async def main():
-    return await(measure_runtime())
-
-print(
-    asyncio.run(main())
-)
+asyncio.run(print_yielded_values())
