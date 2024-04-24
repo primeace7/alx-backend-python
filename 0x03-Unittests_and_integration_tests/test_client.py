@@ -2,14 +2,17 @@
 '''Test client module'''
 import unittest
 import requests
-from .client import GithubOrgClient
+from client import GithubOrgClient
 from unittest.mock import (
     patch,
     Mock,
     PropertyMock
     )
-from parameterized import parameterized
-from .fixtures import TEST_PAYLOAD
+from parameterized import (
+    parameterized,
+    parameterized_class
+    )
+from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -18,7 +21,7 @@ class TestGithubOrgClient(unittest.TestCase):
         'google',
         'abc'
         ])
-    @patch('0x03-Unittests_and_integration_tests.client.get_json')
+    @patch('client.get_json')
     def test_org(self, mock, company):
         '''Test GithubOrgClient.org method'''
         company.return_value = {'this': 'data'}
@@ -30,21 +33,19 @@ class TestGithubOrgClient(unittest.TestCase):
     def test_public_repos_url(self):
         '''Test GithubOrgClient._public_repos_url method'''
         mock = PropertyMock(return_value={'repos_url': 'example.com'})
-        url = '0x03-Unittests_and_integration_tests.client.GithubOrgClient.org'
+        url = 'client.GithubOrgClient.org'
         with patch(url, mock):
             example = GithubOrgClient('company')
             self.assertEqual(example._public_repos_url, 'example.com')
 
-    @patch('0x03-Unittests_and_integration_tests.client.get_json')
+    @patch('client.get_json')
     def test_public_repos(self, mock):
         '''Test GithubOrgClient.public_repos method'''
         mock.return_value = [
             {'name': 'open_source_1'},
             {'name': 'open_source_2'}
             ]
-        url_1 = '0x03-Unittests_and_integration_tests.'
-        url_2 = 'client.GithubOrgClient._public_repos_url',
-        url = url_1 + url_2
+        url = 'client.GithubOrgClient._public_repos_url'
         with patch(url, PropertyMock(return_value='example.com')) as mockery:
             dummy = GithubOrgClient('company')
             self.assertEqual(dummy.public_repos(),
@@ -63,10 +64,10 @@ class TestGithubOrgClient(unittest.TestCase):
 
 
 @parameterized_class([
-    {'org_payload': TEST_PAYLOAD[0],
-     'repos_payload': TEST_PAYLOAD[1],
-     'expected_repos': TEST_PAYLOAD[2],
-     'apache2_repos': TEST_PAYLOAD[3]}
+    {'org_payload': TEST_PAYLOAD[0][0],
+     'repos_payload': TEST_PAYLOAD[0][1],
+     'expected_repos': TEST_PAYLOAD[0][2],
+     'apache2_repos': TEST_PAYLOAD[0][3]}
 ])
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     '''Integration test'''
@@ -75,4 +76,3 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         requests.get = mock
         get_patcher = patch
 
-    def tearDownClass(self):

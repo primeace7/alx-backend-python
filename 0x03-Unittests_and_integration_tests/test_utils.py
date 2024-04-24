@@ -2,7 +2,7 @@
 '''Test utils.access_nested_map function'''
 from parameterized import parameterized
 import requests
-from .utils import (
+from utils import (
     access_nested_map,
     get_json,
     memoize
