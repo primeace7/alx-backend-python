@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-'''Tests for client module'''
+'''
+Tests for client module functions
+'''
 import unittest
 import requests
 from client import GithubOrgClient
@@ -16,7 +18,7 @@ from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    '''Test case for GithubOrgClient'''
+    '''Test case for GithubOrgClient class'''
     @parameterized.expand([
         'google',
         'abc'
@@ -70,7 +72,7 @@ class TestGithubOrgClient(unittest.TestCase):
      'apache2_repos': TEST_PAYLOAD[0][3]}
 ])
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    '''Integration test using fixtures'''
+    '''Integration test using prepared fixtures'''
     def setUpClass(self):
         mock = Mock(return_value=TEST_PAYLOAD)
         requests.get = mock
