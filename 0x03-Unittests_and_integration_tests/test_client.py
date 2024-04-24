@@ -74,6 +74,7 @@ class TestGithubOrgClient(unittest.TestCase):
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     '''Integration test using prepared fixtures in fixtures module'''
     def setUpClass(self):
+        '''Fixture setup for integration test'''
         mock = Mock(return_value=TEST_PAYLOAD)
         requests.get = mock
         get_patcher = patch
