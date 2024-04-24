@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''
-Tests for client module functions
+Unit tests for client module functions and classes
 '''
 import unittest
 import requests
@@ -18,14 +18,14 @@ from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    '''Test case for GithubOrgClient class'''
+    '''Test case for GithubOrgClient class and methods'''
     @parameterized.expand([
         'google',
         'abc'
         ])
     @patch('client.get_json')
     def test_org(self, mock, company):
-        '''Test GithubOrgClient.org method'''
+        '''Test GithubOrgClient.org method for memoization'''
         company.return_value = {'this': 'data'}
         example = GithubOrgClient(company)
         example.org
@@ -33,7 +33,7 @@ class TestGithubOrgClient(unittest.TestCase):
             f'https://api.github.com/orgs/{company}')
 
     def test_public_repos_url(self):
-        '''Test GithubOrgClient._public_repos_url method'''
+        '''Test GithubOrgClient._public_repos_url method for correct url'''
         mock = PropertyMock(return_value={'repos_url': 'example.com'})
         url = 'client.GithubOrgClient.org'
         with patch(url, mock):
@@ -42,7 +42,7 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @patch('client.get_json')
     def test_public_repos(self, mock):
-        '''Test GithubOrgClient.public_repos method'''
+        '''Test GithubOrgClient.public_repos method for correct payload'''
         mock.return_value = [
             {'name': 'open_source_1'},
             {'name': 'open_source_2'}
@@ -60,7 +60,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ({"license": {"key": "other_license"}}, "my_license", False)
         ])
     def test_has_license(self, repo, license_key, result):
-        '''Test GithubOrgClient.has_license method'''
+        '''Test GithubOrgClient.has_license method for license permissions'''
         example = GithubOrgClient('company')
         self.assertEqual(example.has_license(repo, license_key), result)
 
@@ -72,7 +72,7 @@ class TestGithubOrgClient(unittest.TestCase):
      'apache2_repos': TEST_PAYLOAD[0][3]}
 ])
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    '''Integration test using prepared fixtures'''
+    '''Integration test using prepared fixtures in fixtures module'''
     def setUpClass(self):
         mock = Mock(return_value=TEST_PAYLOAD)
         requests.get = mock
