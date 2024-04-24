@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-'''Test client module'''
+'''Tests for client module'''
 import unittest
 import requests
 from client import GithubOrgClient
@@ -70,9 +70,8 @@ class TestGithubOrgClient(unittest.TestCase):
      'apache2_repos': TEST_PAYLOAD[0][3]}
 ])
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    '''Integration test'''
+    '''Integration test using fixtures'''
     def setUpClass(self):
         mock = Mock(return_value=TEST_PAYLOAD)
         requests.get = mock
         get_patcher = patch
-
